@@ -6,7 +6,7 @@
 /* ======================= Config DLL ======================= */
 static HMODULE g_hDll = NULL;
 
-/* Convenção de chamada (Windows): __stdcall */
+/* Convenï¿½ï¿½o de chamada (Windows): __stdcall */
 #ifndef CALLCONV
 #  define CALLCONV WINAPI
 #endif
@@ -41,7 +41,7 @@ static ImprimeXMLSAT_t                ImprimeXMLSAT                = NULL;
 static ImprimeXMLCancelamentoSAT_t    ImprimeXMLCancelamentoSAT    = NULL;
 static InicializaImpressora_t         InicializaImpressora         = NULL;
 
-/* ======================= Configuração ======================= */
+/* ======================= Configuraï¿½ï¿½o ======================= */
 static int   g_tipo      = 1;
 static char  g_modelo[64] = "i9";
 static char  g_conexao[128] = "USB";
@@ -53,7 +53,7 @@ static int   g_conectada = 0;
     do {                                                                         \
         name = (name##_t)GetProcAddress((HMODULE)(h), #name);                    \
         if (!(name)) {                                                           \
-            fprintf(stderr, "Falha ao resolver símbolo %s (erro=%lu)\n",         \
+            fprintf(stderr, "Falha ao resolver sï¿½mbolo %s (erro=%lu)\n",         \
                     #name, GetLastError());                                      \
             return 0;                                                            \
         }                                                                        \
@@ -64,7 +64,7 @@ static void flush_entrada(void) {
     while ((c = getchar()) != '\n' && c != EOF) { }
 }
 
-/* ======================= Funções para manipular a DLL ======================= */
+/* ======================= Funï¿½ï¿½es para manipular a DLL ======================= */
 static int carregarFuncoes(void)
 {
     g_hDll = LoadLibraryA("E1_Impressora01.dll");
@@ -98,31 +98,31 @@ static void liberarBiblioteca(void)
     }
 }
 
-/* ======================= Funções a serem implementadas pelos alunos ======================= */
+/* ======================= Funï¿½ï¿½es a serem implementadas pelos alunos ======================= */
 
 static int exibirMenu(void)
 {
 	int opcao;
     printf("\n\n\n ============= Menu =============\n");
         
-        printf("1 - Configurar conexao\n");
-        printf("2 - Abrir Conexao\n");
-        printf("3 - Impressao Texto\n");
-        printf("4 - Impressao QRCode\n");
-        printf("5 - Impressao Cod Barras\n");
-        printf("6 - Impressao XML SAT\n");
-        printf("7 - Impressao XML Canc SAT\n");
-        printf("8 - Abrir Gaveta Elgin\n");
-        printf("9 - Abrir Gaveta\n");
-        printf("10 - Sinal Sonoro\n");
-        printf("0 - Fechar Conexao e Sair\n");
-        scanf("%d", &opcao);
+        printf("1 - Configurar conexao\n");//mostrar a opcÃ¡o de Configurar conexa
+        printf("2 - Abrir Conexao\n");//mostrar a opcÃ¡o de Abrir Conexao
+        printf("3 - Impressao Texto\n");//mostrar a opcÃ¡o de Impressao Texto
+        printf("4 - Impressao QRCode\n");//mostrar a opcÃ¡o de Impressao QRCode
+        printf("5 - Impressao Cod Barras\n");//mostrar a opcÃ¡o de Impressao Cod Barras
+        printf("6 - Impressao XML SAT\n");//mostrar a opcÃ¡o de Impressao XML SAT
+        printf("7 - Impressao XML Canc SAT\n");//mostrar a opcÃ¡o de Impressao XML Canc SAT
+        printf("8 - Abrir Gaveta Elgin\n");//mostrar a opcÃ¡o de Abrir Gaveta Elgin
+        printf("9 - Abrir Gaveta\n");//mostrar a opcÃ¡o de Abrir Gaveta Sinal Sonoro
+        printf("10 - Sinal Sonoro\n");//mostrar a opcÃ¡o de Sinal Sonoro
+        printf("0 - Fechar Conexao e Sair\n");//mostrar a opcÃ¡o de Fechar Conexao e Sair
+        scanf("%d", &opcao);//recebe o numero digitado
         return opcao;
 }
 
 static void configurarConexao(void)
 {
-    // TODO: pedir ao usuário tipo, modelo, conexão e parâmetro
+    // TODO: pedir ao usuï¿½rio tipo, modelo, conexï¿½o e parï¿½metro
 }
 
 static void abrirConexao(void)
@@ -137,13 +137,13 @@ static void fecharConexao(void)
 
 static void imprimirTexto(void)
 {
-    // TODO: solicitar texto do usuário e chamar ImpressaoTexto
+    // TODO: solicitar texto do usuï¿½rio e chamar ImpressaoTexto
     // incluir AvancaPapel e Corte no final
 }
 
 static void imprimirQRCode(void)
 {
-    // TODO: solicitar conteúdo do QRCode e chamar ImpressaoQRCode(texto, 6, 4)
+    // TODO: solicitar conteï¿½do do QRCode e chamar ImpressaoQRCode(texto, 6, 4)
     // incluir AvancaPapel e Corte no final
 }
 
@@ -189,7 +189,7 @@ static void emitirSinalSonoro(void)
     // TODO: chamar SinalSonoro(4, 50, 5)
 }
 
-/* ======================= Função principal ======================= */
+/* ======================= Funï¿½ï¿½o principal ======================= */
 int main(void)
 {
 	
@@ -204,11 +204,11 @@ int main(void)
         
         switch(opcao){
         	
-        	case 1: //configuração de conexão
+        	case 1: //configuraï¿½ï¿½o de conexï¿½o
         	printf("Configurar conexao\n");
         	break;
         	
-        	case 2: //abrir conexão com a impressora
+        	case 2: //abrir conexï¿½o com a impressora
         	printf("Abrir Conexao\n");
         	break;
         	
@@ -220,35 +220,35 @@ int main(void)
         	printf("Impressao QRCode\n");
         	break;
         	
-        	case 5: //impressão do Cod de Barra
+        	case 5: //impressï¿½o do Cod de Barra
         	printf("Impressao Cod Barras\n");
         	break;
         	
-        	case 6: //impressão do XML SAT
+        	case 6: //impressï¿½o do XML SAT
         	printf("Impressao XML SAT\n");
         	break;
         	
-        	case 7: //impressão XML Canc SAT
+        	case 7: //impressï¿½o XML Canc SAT
         	printf("Impressao XML Canc SAT\n");
         	break;
         	
-        	case 8: //configuração para abrir a Gaveta Elgin
+        	case 8: //configuraï¿½ï¿½o para abrir a Gaveta Elgin
         	printf("Abrir Gaveta Elgin\n");
         	break;
         	
-        	case 9: //configuração para abrir gaveta 
+        	case 9: //configuraï¿½ï¿½o para abrir gaveta 
         	printf("Abrir Gaveta\n");
         	break;
         	
-        	case 10: //cofiguração de sinal Sonoro
+        	case 10: //cofiguraï¿½ï¿½o de sinal Sonoro
         	printf("Sinal Sonoro\n");
         	break;
         	
-        	case 0: //configuração para fechar a conexão e sai
+        	case 0: //configuraï¿½ï¿½o para fechar a conexï¿½o e sai
         	printf("Fechar Conexao e Sair\n");
         	return 0;
         	
-        	default:  // Adicionado: para opções inválidas
+        	default:  // Adicionado: para opï¿½ï¿½es invï¿½lidas
             printf("Opcao invalida! Digite um numero entre 0 e 10.\n");
             break;
         	
