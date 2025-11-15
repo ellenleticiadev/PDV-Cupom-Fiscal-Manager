@@ -3,15 +3,15 @@
 #include <string.h>
 #include <windows.h>
 
-/* ======================= Config DLL ======================= */
+//* ======================= Config DLL ======================= */
 static HMODULE g_hDll = NULL;
 
-/* Conven��o de chamada (Windows): __stdcall */
+//* Convenção de chamada (Windows): __stdcall */
 #ifndef CALLCONV
 #  define CALLCONV WINAPI
 #endif
 
-/* ======================= Assinaturas da DLL ======================= */
+//* ======================= Assinaturas da DLL ======================= */
 typedef int (CALLCONV *AbreConexaoImpressora_t)(int, const char *, const char *, int);
 typedef int (CALLCONV *FechaConexaoImpressora_t)(void);
 typedef int (CALLCONV *ImpressaoTexto_t)(const char *, int, int, int);
@@ -41,7 +41,7 @@ static ImprimeXMLSAT_t                ImprimeXMLSAT                = NULL;
 static ImprimeXMLCancelamentoSAT_t    ImprimeXMLCancelamentoSAT    = NULL;
 static InicializaImpressora_t         InicializaImpressora         = NULL;
 
-/* ======================= Configura��o ======================= */
+/* ======================= Configuração ======================= */
 static int   g_tipo      = 1;
 static char  g_modelo[64] = "i9";
 static char  g_conexao[128] = "USB";
@@ -53,7 +53,7 @@ static int   g_conectada = 0;
     do {                                                                         \
         name = (name##_t)GetProcAddress((HMODULE)(h), #name);                    \
         if (!(name)) {                                                           \
-            fprintf(stderr, "Falha ao resolver s�mbolo %s (erro=%lu)\n",         \
+            fprintf(stderr, "Falha ao resolver símbolo %s (erro=%lu)\n",         \
                     #name, GetLastError());                                      \
             return 0;                                                            \
         }                                                                        \
@@ -64,7 +64,7 @@ static void flush_entrada(void) {
     while ((c = getchar()) != '\n' && c != EOF) { }
 }
 
-/* ======================= Fun��es para manipular a DLL ======================= */
+/* ======================= Funções para manipular a DLL ======================= */
 static int carregarFuncoes(void)
 {
     g_hDll = LoadLibraryA("E1_Impressora01.dll");
@@ -98,7 +98,7 @@ static void liberarBiblioteca(void)
     }
 }
 
-/* ======================= Fun��es a serem implementadas pelos alunos ======================= */
+/* ======================= Funções a serem implementadas pelos alunos ======================= */
 
 static int exibirMenu(void)
 {
@@ -122,28 +122,51 @@ static int exibirMenu(void)
 
 static void configurarConexao(void)
 {
-    // TODO: pedir ao usu�rio tipo, modelo, conex�o e par�metro
+    // TODO: pedir ao usuário tipo, modelo, conexão e parâmetro
+	
+	printf("\nDigite o tipo de conexao (ex: 1 = USB): "); //Solicitamos ao usuario as informações de configuração
+	scanf("%d", &g_tipo);
+	printf("Digite o modelo: ");
+	scanf("%s", g_modelo);
+	printf("Digite a conexao: ");
+	scanf("%s", g_conexao);
+	printf("Digite o parametro: ");
+	scanf("%d", &g_parametro);	
+	printf("\nConfiguracao salva!\n");
+    
 }
 
 static void abrirConexao(void)
 {
     // TODO: chamar AbreConexaoImpressora e validar retorno
-}
+   if(g_conectada){
+   	printf("A impressora esta conectada");
+   	return;
+	} 
+	
+	int ret = AbreConexaoImpressora(g_tipo, g_modelo, g_conexao, g_parametro);
+	if(ret == 0){
+		printf("Conexao estabelecida");
+	}  else {
+		printf("Falha na conexao da impressora, codigo de erro: %d", ret);
+	}
+}   
 
 static void fecharConexao(void)
 {
-    // TODO: chamar FechaConexaoImpressora e tratar retorno
+    printf("Fechar Conexao e Sair\n");
+    return 0;
 }
 
 static void imprimirTexto(void)
 {
-    // TODO: solicitar texto do usu�rio e chamar ImpressaoTexto
+    // TODO: solicitar texto do usuário e chamar ImpressaoTexto
     // incluir AvancaPapel e Corte no final
 }
 
 static void imprimirQRCode(void)
 {
-    // TODO: solicitar conte�do do QRCode e chamar ImpressaoQRCode(texto, 6, 4)
+    // TODO: solicitar conteúdo do QRCode e chamar ImpressaoQRCode(texto, 6, 4)
     // incluir AvancaPapel e Corte no final
 }
 
@@ -189,7 +212,7 @@ static void emitirSinalSonoro(void)
     // TODO: chamar SinalSonoro(4, 50, 5)
 }
 
-/* ======================= Fun��o principal ======================= */
+/* ======================= Função principal ======================= */
 int main(void)
 {
 	
@@ -204,12 +227,14 @@ int main(void)
         
         switch(opcao){
         	
-        	case 1: //configura��o de conex�o
-        	printf("Configurar conexao\n");
+        	case 1: //configuração de conexão
+        	printf("\nConfigurar conexao\n");
+			configurarConexao();
         	break;
         	
-        	case 2: //abrir conex�o com a impressora
+        	case 2: //abrir conexão com a impressora
         	printf("Abrir Conexao\n");
+        	abrirConexao();
         	break;
         	
         	case 3: //imprimir o texto
@@ -220,40 +245,42 @@ int main(void)
         	printf("Impressao QRCode\n");
         	break;
         	
-        	case 5: //impress�o do Cod de Barra
+        	case 5: //impressão do Cod de Barra
         	printf("Impressao Cod Barras\n");
         	break;
         	
-        	case 6: //impress�o do XML SAT
+        	case 6: //impressão do XML SAT
         	printf("Impressao XML SAT\n");
         	break;
         	
-        	case 7: //impress�o XML Canc SAT
+        	case 7: //impressão XML Canc SAT
         	printf("Impressao XML Canc SAT\n");
         	break;
         	
-        	case 8: //configura��o para abrir a Gaveta Elgin
+        	case 8: //configuração para abrir a Gaveta Elgin
         	printf("Abrir Gaveta Elgin\n");
         	break;
         	
-        	case 9: //configura��o para abrir gaveta 
+        	case 9: //configuração para abrir gaveta 
         	printf("Abrir Gaveta\n");
         	break;
         	
-        	case 10: //cofigura��o de sinal Sonoro
+        	case 10: //cofiguração de sinal Sonoro
         	printf("Sinal Sonoro\n");
         	break;
         	
-        	case 0: //configura��o para fechar a conex�o e sai
+        	case 0: //configuração para fechar a conexão e sai
         	printf("Fechar Conexao e Sair\n");
         	return 0;
         	
-        	default:  // Adicionado: para op��es inv�lidas
+        	default:  // Adicionado: para opções inválidas
             printf("Opcao invalida! Digite um numero entre 0 e 10.\n");
             break;
         	
 		}
                
     }
+    
+    
 }
 
